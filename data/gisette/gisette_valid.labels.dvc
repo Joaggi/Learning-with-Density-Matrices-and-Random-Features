@@ -1,0 +1,4 @@
+outs:
+- md5: 379316ad610c8d9f01564e11abd41b14
+  size: 2500
+  path: gisette_valid.labels

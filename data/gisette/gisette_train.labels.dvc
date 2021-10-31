@@ -1,0 +1,4 @@
+outs:
+- md5: 632489aa1031706ac0bd8942c9d5d5a4
+  size: 15000
+  path: gisette_train.labels

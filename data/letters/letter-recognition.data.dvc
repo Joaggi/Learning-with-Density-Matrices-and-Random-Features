@@ -1,0 +1,4 @@
+outs:
+- md5: 6a2d740def5d13ea6096272546f6d41e
+  size: 712565
+  path: letter-recognition.data

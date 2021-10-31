@@ -1,0 +1,4 @@
+outs:
+- md5: 99670d8d942f09d459c7d4486fca8af5
+  size: 11240707
+  path: covtype.data.gz

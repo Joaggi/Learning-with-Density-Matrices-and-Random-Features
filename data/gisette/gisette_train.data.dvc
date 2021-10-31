@@ -1,0 +1,4 @@
+outs:
+- md5: 65a91b1e4659b7934890e109cb36368f
+  size: 67788724
+  path: gisette_train.data

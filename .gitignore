@@ -53,10 +53,7 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# PyBuilder
-target/
-
-# DotEnv configuration
+# PyBuilder target/ DotEnv configuration
 .env
 
 # Database
@@ -76,7 +73,8 @@ target/
 .ipynb_checkpoints/
 
 # exclude data from source control by default
-data/
+data/**/*.*
+!data/*/*.dvc
 
 # Mac OS-specific storage files
 .DS_Store
