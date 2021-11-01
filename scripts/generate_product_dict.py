@@ -17,3 +17,8 @@ def add_random_state_to_dict(list_original_dict):
     return [dict(original_dict, **{"z_random_state": i}) for i, original_dict in enumerate(list_original_dict)]
     #return dict({}, **{"random_state": 1}) 
     #return dict({}, **{"random_state": 1})
+
+
+def generate_several_dict_with_random_state(original_dict, number_of_experiments):
+    
+    return [dict(original_dict, **{"z_random_state": i}) for i in range(number_of_experiments)]

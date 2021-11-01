@@ -53,15 +53,15 @@ else:
 import mlflow
 import mlflow.sklearn
 
-
+name_of_experiment = 'learning-with-density-matrices'
 
 mlflow.set_tracking_uri("sqlite:///mlflow/tracking.db")
 mlflow.set_registry_uri("sqlite:///mlflow/registry.db")
 try:
-  mlflow.create_experiment('learining-with-density-matrices', "mlflow/")
+  mlflow.create_experiment(name_of_experiment, "mlflow/")
 except:
   print("Experiment already created")
-mlflow.set_experiment("learining-with-density-matrices")
+mlflow.set_experiment(name_of_experiment)
 
 # + colab={"base_uri": "https://localhost:8080/"} executionInfo={"elapsed": 15976, "status": "ok", "timestamp": 1613168987500, "user": {"displayName": "sisyphus midas", "photoUrl": "", "userId": "13431807809642753002"}, "user_tz": 300} id="xN741Hz3S2Gw" outputId="591d1f6b-ab20-4021-aa06-3cfef2daf887"
 import qmc.tf.layers as layers
@@ -134,7 +134,7 @@ setting = {
 
 prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
 
-from generate_product_dict import generate_product_dict, add_random_state_to_dict
+from generate_product_dict import generate_product_dict, add_random_state_to_dict, generate_several_dict_with_random_state
 
 settings = generate_product_dict(setting, prod_settings)
 settings = add_random_state_to_dict(settings)
@@ -143,24 +143,18 @@ from experiment_linear_svc import experiment_linear_svc
 
 experiment_linear_svc(X_train, y_train, X_val, y_val, settings, mlflow)
 
-from mlflow.tracking.client import MlflowClient
-from mlflow.entities import ViewType
 
-experiments_list = MlflowClient().list_experiments()
-experiments_list
+experiments_list = mlflow.get_experiment_by_name()
+print(experiments_list)
+    
+from get_best_experiment import get_best_experiment
+best_experiment = get_best_experiment(mlflow, "2", f"params.z_run_name = 'linear_svc' and params.z_state = 'train_val'", "metrics.accuracy")
+from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
+settings_test = convert_best_train_experiment_to_settings_of_test(best_experiment, ["z_n_components", "z_max_iter"], ["z_tol","z_gamma", "z_C"])
 
-query = f"params.z_run_name = 'linear_svc'"
-runs = mlflow.search_runs(experiment_ids="2", filter_string=query, run_view_type=ViewType.ACTIVE_ONLY, output_format="pandas")
+settings_test = generate_several_dict_with_random_state(best_experiment, 10)
 
-best_result = runs.sort_values("metrics.accuracy", ascending=False).iloc[0]
-print(best_result)
-
-keys = best_result.keys()
-filter = keys.str.match(r'(^params\.*)')
-best_params = best_result[keys[filter]]
-keys = best_params.keys()
-new_keys = keys.str.replace('params.','')
-best_params.rename(columns=new_keys)
-
+experiment_linear_svc(np.concatenate([X_train, X_val]), \
+    np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
 
 
