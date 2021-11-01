@@ -1,27 +1,3 @@
-# -*- coding: utf-8 -*-
-# ---
-# jupyter:
-#   jupytext:
-#     formats: ipynb,py:light
-#     text_representation:
-#       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.13.0
-#   kernelspec:
-#     display_name: Python 3 (ipykernel)
-#     language: python
-#     name: python3
-# ---
-
-# + [markdown] id="SGS_NkS5zxZX"
-# Before running the next cell please add a shortcut to the shared folder at the root of your Google Drive
-
-# + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
-# %load_ext autoreload
-# %autoreload 1
-
-# + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 current_path = ""
 
 try:
@@ -49,7 +25,6 @@ else:
 
 # !pwd
 
-# + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 import mlflow
 import mlflow.sklearn
 
@@ -129,10 +104,14 @@ setting = {
     "z_n_components": 1000,
     "z_tol": 1e-05, 
     "z_max_iter": 20000,
-    "z_state": "train_val"
+    "z_step": "train_val"
 }
 
-prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
+#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
+prod_settings = {"z_gamma" : [2], "z_C": [2]}
+
+params_int = ["z_n_components", "z_max_iter"]
+params_float = ["z_tol","z_gamma", "z_C"]
 
 from generate_product_dict import generate_product_dict, add_random_state_to_dict, generate_several_dict_with_random_state
 
@@ -144,17 +123,22 @@ from experiment_linear_svc import experiment_linear_svc
 experiment_linear_svc(X_train, y_train, X_val, y_val, settings, mlflow)
 
 
-experiments_list = mlflow.get_experiment_by_name()
-print(experiments_list)
+experiments_list = mlflow.get_experiment_by_name(name_of_experiment)
+experiment_id = experiments_list.experiment_id
     
-from get_best_experiment import get_best_experiment
-best_experiment = get_best_experiment(mlflow, "2", f"params.z_run_name = 'linear_svc' and params.z_state = 'train_val'", "metrics.accuracy")
+from get_best_val_experiment import get_best_val_experiment
+query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'train_val'"
+metric_to_evaluate = "metrics.accuracy"
+best_experiment = get_best_val_experiment(mlflow, experiment_id,  query, metric_to_evaluate)
 from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
-settings_test = convert_best_train_experiment_to_settings_of_test(best_experiment, ["z_n_components", "z_max_iter"], ["z_tol","z_gamma", "z_C"])
+best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, ["z_n_components", "z_max_iter"], ["z_tol","z_gamma", "z_C"])
 
 settings_test = generate_several_dict_with_random_state(best_experiment, 10)
 
 experiment_linear_svc(np.concatenate([X_train, X_val]), \
     np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
 
-
+from get_best_test_experiment_metric import get_best_test_experiment_metric
+query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'test'"
+metric_to_evaluate = "metrics.accuracy"
+get_best_test_experiment_metric(mlflow, experiment_id,  query, metric_to_evaluate)

@@ -2,11 +2,10 @@ from mlflow.tracking.client import MlflowClient
 from mlflow.entities import ViewType
 
 
-def get_best_experiment(mlflow, experiment_ids, query, metric_to_select):
-    #query = f"params.z_run_name = 'linear_svc'"
-    runs = mlflow.search_runs(experiment_ids="2", filter_string=query, run_view_type=ViewType.ACTIVE_ONLY, output_format="pandas")
+def get_best_val_experiment(mlflow, experiment_ids, query, metric_to_select):
+ 
+    runs = mlflow.search_runs(experiment_ids=experiment_ids, filter_string=query, run_view_type=ViewType.ACTIVE_ONLY, output_format="pandas")
 
-    #best_result = runs.sort_values("metrics.accuracy", ascending=False).iloc[0]
     best_result = runs.sort_values(metric_to_select, ascending=False).iloc[0]
     print(best_result)
 
