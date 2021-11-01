@@ -1,5 +1,5 @@
-def calculate_metrics(model, X, y):
+def calculate_metrics(y_true, y_pred):
     metrics = {
-        "accuracy":model.score(X, y)
+        "accuracy":model.score(y_true, y_pred)
     }
     return metrics
