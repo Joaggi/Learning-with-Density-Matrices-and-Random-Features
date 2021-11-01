@@ -125,13 +125,14 @@ print(y_test.shape)
 
 # + id="sbBAEyWtvCQs"
 setting = {
+    "z_run_name": "linear_svc",
     "z_n_components": 1000,
-    "z_c": 2**1,
-    "z_tol": 1e-05,
-    "z_experiment": "linear_svc"
+    "z_tol": 1e-05, 
+    "z_max_iter": 20000,
+    "z_state": "train_val"
 }
 
-prod_settings = {"z_gamma" : [2**i for i in range(-10,10)]}
+prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
 
 from generate_product_dict import generate_product_dict, add_random_state_to_dict
 
@@ -140,6 +141,19 @@ settings = add_random_state_to_dict(settings)
 
 from experiment_linear_svc import experiment_linear_svc
 
-from scripts.product_dict import generate_product_dict
 experiment_linear_svc(X_train, y_train, X_val, y_val, settings, mlflow)
+
+from mlflow.tracking.client import MlflowClient
+from mlflow.entities import ViewType
+
+experiments_list = MlflowClient().list_experiments()
+experiments_list
+
+query = f"params.z_run_name = 'linear_svc'"
+runs = mlflow.search_runs(experiment_ids="2", filter_string=query, run_view_type=ViewType.ACTIVE_ONLY, output_format="pandas")
+
+best_result = runs.sort_values("metrics.accuracy", ascending=False).iloc[0]
+print(best_result)
+
+best_result
 
