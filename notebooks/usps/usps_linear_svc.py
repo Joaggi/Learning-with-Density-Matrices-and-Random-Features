@@ -155,5 +155,12 @@ runs = mlflow.search_runs(experiment_ids="2", filter_string=query, run_view_type
 best_result = runs.sort_values("metrics.accuracy", ascending=False).iloc[0]
 print(best_result)
 
-best_result
+keys = best_result.keys()
+filter = keys.str.match(r'(^params\.*)')
+best_params = best_result[keys[filter]]
+keys = best_params.keys()
+new_keys = keys.str.replace('params.','')
+best_params.rename(columns=new_keys)
+
+
 
