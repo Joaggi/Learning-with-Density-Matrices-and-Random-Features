@@ -101,14 +101,20 @@ setting = {
     "z_run_name": "dmkdc_sgd",
     "z_n_components": 1000,
     "z_step": "train_val",
-    "z_batch_size": 8
+    "z_batch_size": 8,
+    "z_learning_rate": 1e-06,
+    "z_decay": 0.0,
+    "z_initialize_with_rff": True,
+    "z_type_of_rff": "rff",
+    "z_fix_rff": False
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2]}
+prod_settings = {"z_gamma" : [2**-6], "z_eig_components": [0.1]}
 
 params_int = ["z_n_components", "z_batch_size"]
-params_float = ["z_gamma", "z_C"]
+params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]
+params_boolean = ["z_initialize_with_rff", "z_fix_rff"]
 
 from generate_product_dict import generate_product_dict, add_random_state_to_dict, generate_several_dict_with_random_state
 
@@ -117,7 +123,7 @@ settings = add_random_state_to_dict(settings)
 
 from experiment_dmkdc_sgd import experiment_dmkdc_sgd
 
-experiment_dmkdc(X_train, y_train, X_val, y_val, settings, mlflow)
+experiment_dmkdc_sgd(X_train, y_train, X_val, y_val, settings, mlflow)
 
 
 experiments_list = mlflow.get_experiment_by_name(name_of_experiment)
@@ -128,11 +134,11 @@ query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'tra
 metric_to_evaluate = "metrics.accuracy"
 best_experiment = get_best_val_experiment(mlflow, experiment_id,  query, metric_to_evaluate)
 from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
-best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, params_int, params_float)
+best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, params_int, params_float, params_boolean)
 
 settings_test = generate_several_dict_with_random_state(best_experiment, 10)
 
-experiment_dmkdc(np.concatenate([X_train, X_val]), \
+experiment_dmkdc_sgd(np.concatenate([X_train, X_val]), \
     np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
 
 from get_best_test_experiment_metric import get_best_test_experiment_metric
