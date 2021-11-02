@@ -10,9 +10,7 @@ if IN_COLAB:
     from google.colab import drive
     drive.mount('/content/drive')
     # %cd /content/drive/MyDrive/Academico/doctorado_programacion/doctorado/experiments/2021_01_learning_with_density_matrices
-
-    import sys
-    sys.path.append('submodules/qmc/')
+import sys sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
@@ -131,7 +129,7 @@ query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'tra
 metric_to_evaluate = "metrics.accuracy"
 best_experiment = get_best_val_experiment(mlflow, experiment_id,  query, metric_to_evaluate)
 from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
-best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, ["z_n_components", "z_max_iter"], ["z_tol","z_gamma", "z_C"])
+best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, params_int, params_float)
 
 settings_test = generate_several_dict_with_random_state(best_experiment, 10)
 
