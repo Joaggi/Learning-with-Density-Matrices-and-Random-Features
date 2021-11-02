@@ -7,10 +7,13 @@ except:
   IN_COLAB = False
 
 if IN_COLAB:
+    import os
+    os.system("pip3 install mlflow")
+
     from google.colab import drive
     drive.mount('/content/drive')
     # %cd /content/drive/MyDrive/Academico/doctorado_programacion/doctorado/experiments/2021_01_learning_with_density_matrices
-import sys sys.path.append('submodules/qmc/')
+    import sys sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
@@ -21,7 +24,7 @@ else:
     print(sys.path)
     # %cd ../../
 
-# !pwd
+print(os.getcwd())
 
 import mlflow
 import mlflow.sklearn
