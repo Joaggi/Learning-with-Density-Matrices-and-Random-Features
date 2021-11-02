@@ -32,3 +32,12 @@ jupytext = "^1.13.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pyright]
+include = [
+       "notebooks",
+       "scripts",
+       "submodules"
+]
+venvPath: "~/.cache/pypoetry/virtualenvs/",
+venv: "2021-01-learning-with-density-matrices-_ih_4jaw-py3.9"

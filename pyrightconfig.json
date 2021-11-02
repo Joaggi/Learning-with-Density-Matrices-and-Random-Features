@@ -1,0 +1,9 @@
+{
+    "include":[
+       "notebooks",
+       "scripts",
+       "submodules"
+    ],
+    "venvPath": "~/.cache/pypoetry/virtualenvs/",
+    "venv": "2021-01-learning-with-density-matrices-_ih_4jaw-py3.9"
+}

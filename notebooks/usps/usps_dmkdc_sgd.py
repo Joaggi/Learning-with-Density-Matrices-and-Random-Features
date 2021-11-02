@@ -10,7 +10,7 @@ if IN_COLAB:
     from google.colab import drive
     drive.mount('/content/drive')
     # %cd /content/drive/MyDrive/Academico/doctorado_programacion/doctorado/experiments/2021_01_learning_with_density_matrices
-    import sys sys.path.append('submodules/qmc/')
+import sys sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
@@ -98,7 +98,7 @@ print(y_test.shape)
 
 # + id="sbBAEyWtvCQs"
 setting = {
-    "z_run_name": "dmkdc",
+    "z_run_name": "dmkdc_sgd",
     "z_n_components": 1000,
     "z_step": "train_val",
     "z_batch_size": 8
@@ -115,7 +115,7 @@ from generate_product_dict import generate_product_dict, add_random_state_to_dic
 settings = generate_product_dict(setting, prod_settings)
 settings = add_random_state_to_dict(settings)
 
-from experiment_dmkdc import experiment_dmkdc
+from experiment_dmkdc_sgd import experiment_dmkdc_sgd
 
 experiment_dmkdc(X_train, y_train, X_val, y_val, settings, mlflow)
 
