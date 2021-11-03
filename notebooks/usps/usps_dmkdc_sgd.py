@@ -103,7 +103,8 @@ setting = {
     "z_decay": 0.0,
     "z_initialize_with_rff": True,
     "z_type_of_rff": "rff",
-    "z_fix_rff": False
+    "z_fix_rff": False,
+    "z_dataset": "letters"
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}

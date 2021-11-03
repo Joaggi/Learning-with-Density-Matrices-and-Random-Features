@@ -59,16 +59,16 @@ from sklearn.model_selection import RandomizedSearchCV, KFold
 
 # from sklearn.model_selection import RandomizedSearchCV, KFold
 # from sklearn.metrics import make_scorer
-
-
-# + id="vbwEQAAITCkp"
-from load_usps import load_usps
-
 # + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 print(sys.path)
 
+
+
+# + id="vbwEQAAITCkp"
+from load_dataset import load_dataset
 # + colab={"base_uri": "https://localhost:8080/"} executionInfo={"elapsed": 456, "status": "ok", "timestamp": 1613169018839, "user": {"displayName": "sisyphus midas", "photoUrl": "", "userId": "13431807809642753002"}, "user_tz": 300} id="FbvKAN7IyuGq" outputId="f47a6541-41fa-447a-9f93-9a4297d9d362"
-X_train, y_train, X_test, y_test = load_usps("data/usps/usps.h5")
+X_train, y_train, X_test, y_test = load_dataset("letters")
+
 
 print("shape X_train : ", X_train.shape)
 print("shape y_train : ", y_train.shape)
@@ -98,7 +98,8 @@ setting = {
     "z_run_name": "dmkdc",
     "z_n_components": 1000,
     "z_step": "train_val",
-    "z_batch_size": 8
+    "z_batch_size": 8,
+    "z_dataset": "letters"
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}

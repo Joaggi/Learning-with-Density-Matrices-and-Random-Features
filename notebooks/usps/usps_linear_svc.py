@@ -92,7 +92,8 @@ setting = {
     "z_n_components": 1000,
     "z_tol": 1e-05, 
     "z_max_iter": 20000,
-    "z_step": "train_val"
+    "z_step": "train_val",
+    "z_dataset": "letters"
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
