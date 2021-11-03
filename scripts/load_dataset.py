@@ -7,7 +7,7 @@ def load_dataset(dataset):
         return load_usps("data/usps/usps.h5")
 
     if(dataset == "letters"):
-        return load_letters("data/letters/letters-recognition.data")
+        return load_letters("data/letters/letter-recognition.data")
 
     if(dataset == "gisette"):
         pass
