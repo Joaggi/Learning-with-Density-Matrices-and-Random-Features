@@ -1,10 +1,10 @@
-from load_usps import usps
-from load_letters import usps
+from load_usps import load_usps
+from load_letters import load_letters
 
 
 def load_dataset(dataset):
     if(dataset == "usps"):
-        return loadausps(dataset)
+        return load_usps(dataset)
 
     if(dataset == "letters"):
         return load_letters(dataset)
