@@ -1,10 +1,11 @@
 current_path = ""
 
-try:
-  import google.colab
-  IN_COLAB = True
+
+try:  
+    import google.colab
+    IN_COLAB = True
 except:
-  IN_COLAB = False
+    IN_COLAB = False
 
 if IN_COLAB:
     import os
@@ -12,8 +13,9 @@ if IN_COLAB:
 
     from google.colab import drive
     drive.mount('/content/drive')
-    # %cd /content/drive/MyDrive/Academico/doctorado_programacion/doctorado/experiments/2021_01_learning_with_density_matrices
-    import sys sys.path.append('submodules/qmc/')
+    os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices')
+    import sys
+    sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
@@ -26,18 +28,11 @@ else:
 
 print(os.getcwd())
 
-import mlflow
-import mlflow.sklearn
 
+from mlflow_create_experiment import mflow_create_experiment
 name_of_experiment = 'learning-with-density-matrices'
+mlflow = mlflow_create_experiment(name_of_experiment)
 
-mlflow.set_tracking_uri("sqlite:///mlflow/tracking.db")
-mlflow.set_registry_uri("sqlite:///mlflow/registry.db")
-try:
-  mlflow.create_experiment(name_of_experiment, "mlflow/")
-except:
-  print("Experiment already created")
-mlflow.set_experiment(name_of_experiment)
 
 # + colab={"base_uri": "https://localhost:8080/"} executionInfo={"elapsed": 15976, "status": "ok", "timestamp": 1613168987500, "user": {"displayName": "sisyphus midas", "photoUrl": "", "userId": "13431807809642753002"}, "user_tz": 300} id="xN741Hz3S2Gw" outputId="591d1f6b-ab20-4021-aa06-3cfef2daf887"
 import qmc.tf.layers as layers
@@ -88,7 +83,7 @@ X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.
 
 # + id="q5sHceZTvA4W"
 from min_max_scaler import min_max_scaler
-_train, X_val, X_test = min_max_scaler(X_train, X_val, X_test)
+X_train, X_val, X_test = min_max_scaler(X_train, X_val, X_test)
 
 # + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 print(X_train.shape)
