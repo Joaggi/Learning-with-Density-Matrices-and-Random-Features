@@ -28,8 +28,10 @@ else:
 
 print(os.getcwd())
 
+sys.path.append('scripts/')
 
-from mlflow_create_experiment import mflow_create_experiment
+from mlflow_create_experiment import mlflow_create_experiment
+
 name_of_experiment = 'learning-with-density-matrices'
 mlflow = mlflow_create_experiment(name_of_experiment)
 
@@ -60,7 +62,6 @@ from sklearn.model_selection import RandomizedSearchCV, KFold
 # from sklearn.metrics import make_scorer
 
 # + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
-sys.path.append('scripts/')
 
 # + id="vbwEQAAITCkp"
 from load_usps import load_usps
