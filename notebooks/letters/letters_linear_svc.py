@@ -1,16 +1,20 @@
 current_path = ""
 
-try:
-  import google.colab
-  IN_COLAB = True
+import os 
+try:  
+    import google.colab
+    IN_COLAB = True
 except:
-  IN_COLAB = False
+    IN_COLAB = False
 
 if IN_COLAB:
+    os.system("pip3 install mlflow")
+
     from google.colab import drive
     drive.mount('/content/drive')
-    # %cd /content/drive/MyDrive/Academico/doctorado_programacion/doctorado/experiments/2021_01_learning_with_density_matrices
-import sys sys.path.append('submodules/qmc/')
+    os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices')
+    import sys
+    sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
@@ -21,11 +25,24 @@ else:
     print(sys.path)
     # %cd ../../
 
-# !pwd
-from mlflow_create_experiment import mlflow_create_experiment
-name_of_experiment = 'learning-with-density-matrices'
-mlflow = mlflow_create_experiment(name_of_experiment)
+print(os.getcwd())
 
+sys.path.append('scripts/')
+
+
+
+import mlflow
+import mlflow.sklearn
+
+name_of_experiment = 'learning-with-density-matrices'
+
+mlflow.set_tracking_uri("sqlite:///mlflow/tracking.db")
+mlflow.set_registry_uri("sqlite:///mlflow/registry.db")
+try:
+  mlflow.create_experiment(name_of_experiment, "mlflow/")
+except:
+  print("Experiment already created")
+mlflow.set_experiment(name_of_experiment)
 
 # + colab={"base_uri": "https://localhost:8080/"} executionInfo={"elapsed": 15976, "status": "ok", "timestamp": 1613168987500, "user": {"displayName": "sisyphus midas", "photoUrl": "", "userId": "13431807809642753002"}, "user_tz": 300} id="xN741Hz3S2Gw" outputId="591d1f6b-ab20-4021-aa06-3cfef2daf887"
 import qmc.tf.layers as layers
@@ -53,6 +70,10 @@ from sklearn.model_selection import RandomizedSearchCV, KFold
 # from sklearn.metrics import make_scorer
 
 # + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
+sys.path.append('scripts/')
+
+
+# + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 print(sys.path)
 
 
@@ -60,13 +81,12 @@ print(sys.path)
 # + id="vbwEQAAITCkp"
 from load_dataset import load_dataset
 # + colab={"base_uri": "https://localhost:8080/"} executionInfo={"elapsed": 456, "status": "ok", "timestamp": 1613169018839, "user": {"displayName": "sisyphus midas", "photoUrl": "", "userId": "13431807809642753002"}, "user_tz": 300} id="FbvKAN7IyuGq" outputId="f47a6541-41fa-447a-9f93-9a4297d9d362"
-X_train, y_train, X_test, y_test = load_dataset("usps")
+X_train, y_train, X_test, y_test = load_dataset("letters")
 
 print("shape X_train : ", X_train.shape)
 print("shape y_train : ", y_train.shape)
 print("shape X_test : ", X_test.shape)
 print("shape y_test : ", y_test.shape)
-
 
 # + id="CCp5RUItvNfu"
 
@@ -95,8 +115,8 @@ setting = {
     "z_step": "train_val"
 }
 
-#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2], "z_C": [2]}
+prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
+#prod_settings = {"z_gamma" : [2], "z_C": [2]}
 
 params_int = ["z_n_components", "z_max_iter"]
 params_float = ["z_tol","z_gamma", "z_C"]

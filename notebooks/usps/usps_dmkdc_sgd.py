@@ -31,7 +31,6 @@ print(os.getcwd())
 sys.path.append('scripts/')
 
 from mlflow_create_experiment import mlflow_create_experiment
-
 name_of_experiment = 'learning-with-density-matrices'
 mlflow = mlflow_create_experiment(name_of_experiment)
 
@@ -62,15 +61,14 @@ from sklearn.model_selection import RandomizedSearchCV, KFold
 # from sklearn.metrics import make_scorer
 
 # + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
-
-# + id="vbwEQAAITCkp"
-from load_usps import load_usps
-
-# + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 print(sys.path)
 
+
+
+# + id="vbwEQAAITCkp"
+from load_dataset import load_dataset
 # + colab={"base_uri": "https://localhost:8080/"} executionInfo={"elapsed": 456, "status": "ok", "timestamp": 1613169018839, "user": {"displayName": "sisyphus midas", "photoUrl": "", "userId": "13431807809642753002"}, "user_tz": 300} id="FbvKAN7IyuGq" outputId="f47a6541-41fa-447a-9f93-9a4297d9d362"
-X_train, y_train, X_test, y_test = load_usps("data/usps/usps.h5")
+X_train, y_train, X_test, y_test = load_dataset("usps")
 
 print("shape X_train : ", X_train.shape)
 print("shape y_train : ", y_train.shape)

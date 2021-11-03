@@ -1,16 +1,21 @@
 current_path = ""
 
-try:
-  import google.colab
-  IN_COLAB = True
+
+try:  
+    import google.colab
+    IN_COLAB = True
 except:
-  IN_COLAB = False
+    IN_COLAB = False
 
 if IN_COLAB:
+    import os
+    os.system("pip3 install mlflow")
+
     from google.colab import drive
     drive.mount('/content/drive')
-    # %cd /content/drive/MyDrive/Academico/doctorado_programacion/doctorado/experiments/2021_01_learning_with_density_matrices
-import sys sys.path.append('submodules/qmc/')
+    os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices')
+    import sys
+    sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
@@ -21,7 +26,10 @@ else:
     print(sys.path)
     # %cd ../../
 
-# !pwd
+print(os.getcwd())
+
+sys.path.append('scripts/')
+
 from mlflow_create_experiment import mlflow_create_experiment
 name_of_experiment = 'learning-with-density-matrices'
 mlflow = mlflow_create_experiment(name_of_experiment)
@@ -52,21 +60,20 @@ from sklearn.model_selection import RandomizedSearchCV, KFold
 # from sklearn.model_selection import RandomizedSearchCV, KFold
 # from sklearn.metrics import make_scorer
 
+
+# + id="vbwEQAAITCkp"
+from load_usps import load_usps
+
 # + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 print(sys.path)
 
-
-
-# + id="vbwEQAAITCkp"
-from load_dataset import load_dataset
 # + colab={"base_uri": "https://localhost:8080/"} executionInfo={"elapsed": 456, "status": "ok", "timestamp": 1613169018839, "user": {"displayName": "sisyphus midas", "photoUrl": "", "userId": "13431807809642753002"}, "user_tz": 300} id="FbvKAN7IyuGq" outputId="f47a6541-41fa-447a-9f93-9a4297d9d362"
-X_train, y_train, X_test, y_test = load_dataset("usps")
+X_train, y_train, X_test, y_test = load_usps("data/usps/usps.h5")
 
 print("shape X_train : ", X_train.shape)
 print("shape y_train : ", y_train.shape)
 print("shape X_test : ", X_test.shape)
 print("shape y_test : ", y_test.shape)
-
 
 # + id="CCp5RUItvNfu"
 
@@ -75,7 +82,7 @@ X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.
 
 # + id="q5sHceZTvA4W"
 from min_max_scaler import min_max_scaler
-X_train, X_val, X_test = min_max_scaler(X_train, X_val, X_test)
+_train, X_val, X_test = min_max_scaler(X_train, X_val, X_test)
 
 # + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 print(X_train.shape)
@@ -88,27 +95,26 @@ print(y_test.shape)
 
 # + id="sbBAEyWtvCQs"
 setting = {
-    "z_run_name": "linear_svc",
+    "z_run_name": "dmkdc",
     "z_n_components": 1000,
-    "z_tol": 1e-05, 
-    "z_max_iter": 20000,
-    "z_step": "train_val"
+    "z_step": "train_val",
+    "z_batch_size": 8
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2], "z_C": [2]}
+prod_settings = {"z_gamma" : [2]}
 
-params_int = ["z_n_components", "z_max_iter"]
-params_float = ["z_tol","z_gamma", "z_C"]
+params_int = ["z_n_components", "z_batch_size"]
+params_float = ["z_gamma", "z_C"]
 
 from generate_product_dict import generate_product_dict, add_random_state_to_dict, generate_several_dict_with_random_state
 
 settings = generate_product_dict(setting, prod_settings)
 settings = add_random_state_to_dict(settings)
 
-from experiment_linear_svc import experiment_linear_svc
+from experiment_dmkdc import experiment_dmkdc
 
-experiment_linear_svc(X_train, y_train, X_val, y_val, settings, mlflow)
+experiment_dmkdc(X_train, y_train, X_val, y_val, settings, mlflow)
 
 
 experiments_list = mlflow.get_experiment_by_name(name_of_experiment)
@@ -123,7 +129,7 @@ best_experiment = convert_best_train_experiment_to_settings_of_test(best_experim
 
 settings_test = generate_several_dict_with_random_state(best_experiment, 10)
 
-experiment_linear_svc(np.concatenate([X_train, X_val]), \
+experiment_dmkdc(np.concatenate([X_train, X_val]), \
     np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
 
 from get_best_test_experiment_metric import get_best_test_experiment_metric
