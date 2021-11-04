@@ -14,6 +14,7 @@ def load_dataset(dataset):
         return load_letters("data/letters/letter-recognition.data")
 
     if(dataset == "gisette"):
+        print("gisette")
         return load_gisette("data/gisette/")
 
     if(dataset == "forest"):
