@@ -103,7 +103,8 @@ setting = {
     "z_decay": 0.0,
     "z_initialize_with_rff": True,
     "z_type_of_rff": "rff",
-    "z_fix_rff": False,
+    "z_fix_rff": False, 
+    "z_epochs": 2000, 
     "z_dataset": "letters"
 }
 

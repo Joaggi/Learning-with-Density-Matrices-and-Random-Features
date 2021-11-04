@@ -106,7 +106,7 @@ setting = {
 prod_settings = {"z_gamma" : [2]}
 
 params_int = ["z_n_components", "z_batch_size"]
-params_float = ["z_gamma", "z_C"]
+params_float = ["z_gamma"]
 
 from generate_product_dict import generate_product_dict, add_random_state_to_dict, generate_several_dict_with_random_state
 

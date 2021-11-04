@@ -82,7 +82,7 @@ X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.
 
 # + id="q5sHceZTvA4W"
 from min_max_scaler import min_max_scaler
-_train, X_val, X_test = min_max_scaler(X_train, X_val, X_test)
+X_train, X_val, X_test = min_max_scaler(X_train, X_val, X_test)
 
 # + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 print(X_train.shape)
@@ -103,7 +103,7 @@ setting = {
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2]}
+prod_settings = {"z_gamma" : [2**-5]}
 
 params_int = ["z_n_components", "z_batch_size"]
 params_float = ["z_gamma", "z_C"]
