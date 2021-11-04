@@ -6,6 +6,7 @@ from get_best_val_experiment import get_best_val_experiment
 from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
 from get_best_test_experiment_metric import get_best_test_experiment_metric
 from make_experiment import make_experiment
+import numpy as np
 
 def experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, params_int, params_float, mlflow):
 

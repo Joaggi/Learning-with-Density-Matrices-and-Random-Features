@@ -67,4 +67,4 @@ algorithm = "linear_svc"
 dataset = "usps"
 
 from experiments import experiments
-experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, params_int, params_float, mlflow):
+experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, params_int, params_float, mlflow)
