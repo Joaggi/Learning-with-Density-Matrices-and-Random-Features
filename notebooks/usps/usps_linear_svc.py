@@ -30,17 +30,9 @@ print(os.getcwd())
 
 sys.path.append('scripts/')
 
-
-# !pwd
 from mlflow_create_experiment import mlflow_create_experiment
-name_of_experiment = 'learning-with-density-matrices'
-mlflow = mlflow_create_experiment(name_of_experiment)
-
-
 import qmc.tf.layers as layers
 import qmc.tf.models as models
-
-
 
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MinMaxScaler
@@ -53,16 +45,16 @@ import keras
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import RandomizedSearchCV, KFold
 
-
-print(sys.path)
+from experiments import experiments
 
 setting = {
+    "z_name_of_experiment": 'learning-with-density-matrices',
     "z_run_name": "linear_svc",
     "z_n_components": 1000,
     "z_tol": 1e-05, 
     "z_max_iter": 20000,
     "z_step": "train_val",
-    "z_dataset": "letters",
+    "z_dataset": "usps",
     "z_test_running_times": 10 
 
 }
@@ -72,9 +64,6 @@ prod_settings = {"z_gamma" : [2], "z_C": [2]}
 params_int = ["z_n_components", "z_max_iter"]
 params_float = ["z_tol","z_gamma", "z_C"]
 
+mlflow = mlflow_create_experiment(setting["z_name_of_experiment"])
 
-algorithm = "linear_svc"
-dataset = "usps"
-
-from experiments import experiments
-experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, params_int, params_float, mlflow)
+experiments(setting, prod_settings, params_int, params_float, mlflow)

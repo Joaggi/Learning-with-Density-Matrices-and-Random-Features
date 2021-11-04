@@ -12,11 +12,7 @@ if IN_COLAB:
     os.system("pip3 install mlflow")
 
     from google.colab import drive
-    drive.mount('/content/drive')
-    os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices')
-    import sys
-    sys.path.append('submodules/qmc/')
-    #sys.path.append('../../../../submodules/qmc/')
+    drive.mount('/content/drive') os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices') import sys sys.path.append('submodules/qmc/') #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
     import sys
@@ -31,16 +27,8 @@ print(os.getcwd())
 sys.path.append('scripts/')
 
 
-# !pwd
-from mlflow_create_experiment import mlflow_create_experiment
-name_of_experiment = 'learning-with-density-matrices'
-mlflow = mlflow_create_experiment(name_of_experiment)
-
-
 import qmc.tf.layers as layers
 import qmc.tf.models as models
-
-
 
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MinMaxScaler
@@ -53,10 +41,12 @@ import keras
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import RandomizedSearchCV, KFold
 
+from experiments import experiments
 
+from mlflow_create_experiment import mlflow_create_experiment
 
-# + id="sbBAEyWtvCQs"
 setting = {
+    "z_name_of_experiment": 'learning-with-density-matrices',
     "z_run_name": "dmkdc_sgd",
     "z_n_components": 1000,
     "z_step": "train_val",
@@ -67,7 +57,7 @@ setting = {
     "z_type_of_rff": "rff",
     "z_fix_rff": False, 
     "z_epochs": 3, 
-    "z_dataset": "letters",
+    "z_dataset": "usps",
     "z_test_running_times": 2
 }
 
@@ -78,8 +68,6 @@ params_int = ["z_n_components", "z_batch_size", "z_epochs"]
 params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]
 params_boolean = ["z_initialize_with_rff", "z_fix_rff"]
 
-algorithm = "dmkdc_sgd"
-dataset = "usps"
+mlflow = mlflow_create_experiment(setting["z_name_of_experiment"])
 
-from experiments import experiments
-experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, params_int, params_float, mlflow)
+experiments(setting, prod_settings, params_int, params_float, mlflow)

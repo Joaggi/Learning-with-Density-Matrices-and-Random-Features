@@ -12,11 +12,7 @@ if IN_COLAB:
     os.system("pip3 install mlflow")
 
     from google.colab import drive
-    drive.mount('/content/drive')
-    os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices')
-    import sys
-    sys.path.append('submodules/qmc/')
-    #sys.path.append('../../../../submodules/qmc/')
+    drive.mount('/content/drive') os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices') import sys sys.path.append('submodules/qmc/') #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
     import sys
@@ -31,33 +27,8 @@ print(os.getcwd())
 sys.path.append('scripts/')
 
 
-# + id="sbBAEyWtvCQs"
-setting = {
-    "z_name_of_experiment": 'learning-with-density-matrices',
-    "z_run_name": "dmkdc",
-    "z_n_components": 1000,
-    "z_step": "train_val",
-    "z_batch_size": 8,
-    "z_dataset": "letters",
-    "z_test_running_times": 10
-}
-
-#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2]}
-
-params_int = ["z_n_components", "z_batch_size"]
-params_float = ["z_gamma"]
-
-
-# !pwd
-from mlflow_create_experiment import mlflow_create_experiment
-mlflow = mlflow_create_experiment(setting["z_name_of_experiment"])
-
-
 import qmc.tf.layers as layers
 import qmc.tf.models as models
-
-
 
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MinMaxScaler
@@ -70,8 +41,30 @@ import keras
 from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.model_selection import RandomizedSearchCV, KFold
 
-
-
-
 from experiments import experiments
+
+from mlflow_create_experiment import mlflow_create_experiment
+
+
+
+setting = {
+    "z_name_of_experiment": 'learning-with-density-matrices',
+    "z_run_name": "dmkdc",
+    "z_n_components": 1000,
+    "z_step": "train_val",
+    "z_batch_size": 8,
+    "z_dataset": "usps",
+    "z_test_running_times": 10
+}
+
+#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
+prod_settings = {"z_gamma" : [2]}
+
+params_int = ["z_n_components", "z_batch_size"]
+params_float = ["z_gamma"]
+
+
+# !pwd
+mlflow = mlflow_create_experiment(setting["z_name_of_experiment"])
+
 experiments(setting, prod_settings, params_int, params_float, mlflow)
