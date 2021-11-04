@@ -6,8 +6,8 @@ import numpy as np
 def experiment_dmkdc(X_train, y_train, X_test, y_test, settings, mlflow):
     num_clases = np.unique(y_train).shape[0]
 
-    for setting in settings:
-
+    for i, setting in enumerate(settings):
+        print(r"experiment_dmkdc {i}")
         with mlflow.start_run(run_name=setting["z_run_name"]):
             fm_x = layers.QFeatureMapRFF(X_train.shape[1], dim=setting["z_n_components"], gamma=setting["z_gamma"], random_state=setting["z_random_state"])
         

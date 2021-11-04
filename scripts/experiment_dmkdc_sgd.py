@@ -14,7 +14,8 @@ def experiment_dmkdc_sgd(X_train, y_train, X_test, y_test, settings, mlflow):
 
     num_classes = np.unique(y_train).shape[0]
 
-    for setting in settings:
+    for i, setting in enumerate(settings):
+        print(r"experiment_dmkdc {i}")
 
         with mlflow.start_run(run_name=setting["z_run_name"]):
             tensorboard_callback = tf.keras.callbacks.TensorBoard("./mlflow/tensorboard", histogram_freq=1)
