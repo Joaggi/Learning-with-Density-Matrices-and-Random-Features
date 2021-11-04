@@ -1,10 +1,10 @@
-except:
 current_path = ""
 
 
 try:  
     import google.colab
     IN_COLAB = True
+except:
     IN_COLAB = False
 
 if IN_COLAB:
@@ -45,29 +45,29 @@ from experiments import experiments
 
 from mlflow_create_experiment import mlflow_create_experiment
 
-
-
 setting = {
     "z_name_of_experiment": 'learning-with-density-matrices',
-    "z_run_name": "dmkdc",
+    "z_run_name": "dmkdc_sgd",
     "z_n_components": 1000,
     "z_step": "train_val",
     "z_batch_size": 8,
+    "z_learning_rate": 1e-06,
+    "z_decay": 0.0,
+    "z_initialize_with_rff": True,
+    "z_type_of_rff": "rff",
+    "z_fix_rff": False, 
+    "z_epochs": 3, 
     "z_dataset": "gisette",
     "z_test_running_times": 2
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2]}
+prod_settings = {"z_gamma" : [2**-6], "z_eig_components": [0.1]}
 
-params_int = ["z_n_components", "z_batch_size"]
-params_float = ["z_gamma"]
+params_int = ["z_n_components", "z_batch_size", "z_epochs"]
+params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]
+params_boolean = ["z_initialize_with_rff", "z_fix_rff"]
 
-
-# !pwd
 mlflow = mlflow_create_experiment(setting["z_name_of_experiment"])
 
 experiments(setting, prod_settings, params_int, params_float, mlflow)
-
-
-

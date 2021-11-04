@@ -11,3 +11,13 @@ def load_dataset(dataset):
 
     if(dataset == "gisette"):
         pass
+
+    if(dataset == "forest"):
+        pass
+
+    if(dataset == "mnist"):
+        pass
+
+    if(dataset == "cifar"):
+        pass
+    
