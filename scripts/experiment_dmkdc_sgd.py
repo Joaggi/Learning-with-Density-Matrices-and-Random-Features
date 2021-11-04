@@ -27,7 +27,7 @@ def experiment_dmkdc_sgd(X_train, y_train, X_test, y_test, settings, mlflow):
        
             y_train_bin = tf.reshape(tf.keras.backend.one_hot(y_train, num_classes), (-1, num_classes))
             y_test_bin = tf.reshape(tf.keras.backend.one_hot(y_test, num_classes), (-1, num_classes))
-            model.fit(X_train, y_train_bin.numpy(), epochs=setting["epochs"], batch_size=setting["z_batch_size"], \
+            model.fit(X_train, y_train_bin.numpy(), epochs=setting["z_epochs"], batch_size=setting["z_batch_size"], \
                 validation_data=(X_test, y_test_bin.numpy()), callbacks=[tensorboard_callback])
             y_test_bin = tf.reshape(tf.keras.backend.one_hot(y_test, num_classes), (-1, num_classes))
             out = model.predict(X_test)
