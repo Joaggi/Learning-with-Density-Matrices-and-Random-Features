@@ -3,7 +3,7 @@ import numpy as np
 
 from sklearn.model_selection import train_test_split
 
-from tf.keras.datasets import mnist
+from keras.datasets import mnist
 
 def load_mnist(path):
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
