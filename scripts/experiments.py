@@ -2,10 +2,10 @@ from load_dataset import load_dataset
 from min_max_scaler import min_max_scaler
 from sklearn.model_selection import train_test_split
 from generate_product_dict import generate_product_dict, add_random_state_to_dict, generate_several_dict_with_random_state
-from experiment_linear_svc import experiment_linear_svc
 from get_best_val_experiment import get_best_val_experiment
 from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
 from get_best_test_experiment_metric import get_best_test_experiment_metric
+from make_experiment import make_experiment
 
 def experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, params_int, params_float, mlflow):
 
@@ -34,9 +34,9 @@ def experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, 
     settings = generate_product_dict(setting, prod_settings)
     settings = add_random_state_to_dict(settings)
 
+    make_experiment(algorithm, X_train, y_train, X_val, y_val, settings, mlflow)
 
-    experiment_linear_svc(X_train, y_train, X_val, y_val, settings, mlflow)
-
+    
 
     experiments_list = mlflow.get_experiment_by_name(name_of_experiment)
     experiment_id = experiments_list.experiment_id
@@ -48,8 +48,8 @@ def experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, 
 
     settings_test = generate_several_dict_with_random_state(best_experiment, setting["z_test_running_times"])
 
-    experiment_linear_svc(np.concatenate([X_train, X_val]), \
-    np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
+    make_experiment(np.concatenate([X_train, X_val]), \
+        np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
 
     query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'test'"
     metric_to_evaluate = "metrics.accuracy"
