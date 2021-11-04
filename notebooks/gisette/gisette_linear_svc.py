@@ -1,3 +1,4 @@
+else:
 
 current_path = ""
 
@@ -18,7 +19,6 @@ if IN_COLAB:
     sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
-else:
     import sys
     sys.path.append('submodules/qmc/')
     sys.path.append('data/')

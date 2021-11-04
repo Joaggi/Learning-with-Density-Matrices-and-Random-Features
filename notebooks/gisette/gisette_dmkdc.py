@@ -59,7 +59,7 @@ setting = {
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2]}
+prod_settings = {"z_gamma" : [2**-7]}
 
 params_int = ["z_n_components", "z_batch_size"]
 params_float = ["z_gamma"]

@@ -45,7 +45,7 @@ def experiments(setting, prod_settings, params_int, params_float, mlflow):
     experiments_list = mlflow.get_experiment_by_name(name_of_experiment)
     experiment_id = experiments_list.experiment_id
 
-    query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'train_val'"
+    query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'train_val' and params.z_dataset = '{setting['z_dataset']}'"
     metric_to_evaluate = "metrics.accuracy"
     best_experiment = get_best_val_experiment(mlflow, experiment_id,  query, metric_to_evaluate)
     best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, params_int, params_float)
@@ -55,6 +55,6 @@ def experiments(setting, prod_settings, params_int, params_float, mlflow):
     make_experiment(algorithm, np.concatenate([X_train, X_val]), \
         np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
 
-    query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'test'"
+    query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'test' and params.z_dataset = '{setting['z_dataset']}'"
     metric_to_evaluate = "metrics.accuracy"
     get_best_test_experiment_metric(mlflow, experiment_id,  query, metric_to_evaluate)

@@ -55,6 +55,7 @@ setting = {
     "z_batch_size": 8,
     "z_dataset": "usps",
     "z_test_running_times": 10
+
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-20,20)]}

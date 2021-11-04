@@ -18,14 +18,11 @@ if IN_COLAB:
     sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
-else:
-    import sys
-    sys.path.append('submodules/qmc/')
-    sys.path.append('data/')
+else: import sys sys.path.append('submodules/qmc/') sys.path.append('data/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
     # %cd ../../
-
+import os
 print(os.getcwd())
 
 sys.path.append('scripts/')
@@ -59,7 +56,7 @@ setting = {
 
 }
 
-prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
+prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,5)]}
 #prod_settings = {"z_gamma" : [2], "z_C": [2]}
 
 params_int = ["z_n_components", "z_max_iter"]

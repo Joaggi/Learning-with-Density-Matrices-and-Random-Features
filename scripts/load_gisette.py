@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.model_selection import train_test_split
-
+from sklearn.decomposition import PCA
 
 def load_gisette(path):
 
@@ -32,6 +32,8 @@ def load_gisette(path):
     y_train = y_train.astype('int32')
     y_test = y_test.astype('int32')
 
-   
+    pca = PCA(n_components=400)
+    X_train = pca.fit_transform(X_train)
+    X_test = pca.transform(X_test)
 
     return X_train, y_train, X_test, y_test
