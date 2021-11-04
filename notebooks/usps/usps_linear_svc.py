@@ -25,7 +25,7 @@ else:
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
     # %cd ../../
-
+import os
 print(os.getcwd())
 
 sys.path.append('scripts/')

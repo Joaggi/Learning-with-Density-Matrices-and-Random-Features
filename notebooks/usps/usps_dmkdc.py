@@ -57,8 +57,8 @@ setting = {
     "z_test_running_times": 10
 }
 
-prod_settings = {"z_gamma" : [2**i for i in range(-20,20)]}
-#prod_settings = {"z_gamma" : [2**-7, 2**-6, 2**-5]}
+#prod_settings = {"z_gamma" : [2**i for i in range(-20,20)]}
+prod_settings = {"z_gamma" : [2**-4]}
 
 params_int = ["z_n_components", "z_batch_size"]
 params_float = ["z_gamma"]

@@ -5,7 +5,6 @@ try:
     IN_COLAB = True
 except:
     IN_COLAB = False
-
 if IN_COLAB:
     import os
     os.system("pip3 install mlflow")
@@ -63,8 +62,8 @@ setting = {
     "z_test_running_times": 10
 }
 
-prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_eig_components": [0.0, 0.1, 0.5]}
-#prod_settings = {"z_gamma" : [2**-7, 2**-6, 2**-5], "z_eig_components": [0.1]}
+#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_eig_components": [0.0, 0.1, 0.5]}
+prod_settings = {"z_gamma" : [2**-6], "z_eig_components": [0.1]}
 
 params_int = ["z_n_components", "z_batch_size", "z_epochs"]
 params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]

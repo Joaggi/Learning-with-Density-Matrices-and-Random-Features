@@ -59,7 +59,8 @@ setting = {
 
 }
 
-prod_settings = {"z_gamma" : [2], "z_C": [2]}
+prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
+#prod_settings = {"z_gamma" : [2], "z_C": [2]}
 
 params_int = ["z_n_components", "z_max_iter"]
 params_float = ["z_tol","z_gamma", "z_C"]
