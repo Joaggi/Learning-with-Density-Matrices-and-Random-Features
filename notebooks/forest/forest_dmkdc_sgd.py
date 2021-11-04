@@ -56,7 +56,8 @@ setting = {
     "z_initialize_with_rff": True,
     "z_type_of_rff": "rff",
     "z_fix_rff": False, 
-    "z_epochs": 3, 
+    "z_train_epochs": 50, 
+    "z_test_epochs": 500, 
     "z_dataset": "forest",
     "z_test_running_times": 2
 }

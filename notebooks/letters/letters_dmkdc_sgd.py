@@ -1,6 +1,5 @@
 current_path = ""
 
-
 try:  
     import google.colab
     IN_COLAB = True
@@ -10,9 +9,12 @@ except:
 if IN_COLAB:
     import os
     os.system("pip3 install mlflow")
-
     from google.colab import drive
-    drive.mount('/content/drive') os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices') import sys sys.path.append('submodules/qmc/') #sys.path.append('../../../../submodules/qmc/')
+    drive.mount('/content/drive')
+    os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices')
+    import sys
+    sys.path.append('submodules/qmc/')
+    #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
     import sys
@@ -20,7 +22,7 @@ else:
     sys.path.append('data/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
-    # %cd ../../
+    # %cd ../../print(os.getcwd())
 
 print(os.getcwd())
 
@@ -56,13 +58,14 @@ setting = {
     "z_initialize_with_rff": True,
     "z_type_of_rff": "rff",
     "z_fix_rff": False, 
-    "z_epochs": 3, 
+    "z_train_epochs": 50, 
+    "z_test_epochs": 500, 
     "z_dataset": "letters",
     "z_test_running_times": 2
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2**-6], "z_eig_components": [0.1]}
+prod_settings = {"z_gamma" : [2**-7, 2**-6, 2**-5], "z_eig_components": [0, 0.1, 0.5]}
 
 params_int = ["z_n_components", "z_batch_size", "z_epochs"]
 params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]

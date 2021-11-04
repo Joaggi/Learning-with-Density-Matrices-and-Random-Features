@@ -15,7 +15,8 @@ def experiment_dmkdc_sgd(X_train, y_train, X_test, y_test, settings, mlflow):
     num_classes = np.unique(y_train).shape[0]
 
     for i, setting in enumerate(settings):
-
+        
+        epochs = setting["z_train_epochs"] if setting["z_step"] == "train_val" else setting["z_test_epochs"]
         print(f"experiment_dmkdc {i} setting {setting}")
         with mlflow.start_run(run_name=setting["z_run_name"]):
             tensorboard_callback = tf.keras.callbacks.TensorBoard("./mlflow/tensorboard", histogram_freq=1)
@@ -28,7 +29,7 @@ def experiment_dmkdc_sgd(X_train, y_train, X_test, y_test, settings, mlflow):
        
             y_train_bin = tf.reshape(tf.keras.backend.one_hot(y_train, num_classes), (-1, num_classes))
             y_test_bin = tf.reshape(tf.keras.backend.one_hot(y_test, num_classes), (-1, num_classes))
-            model.fit(X_train, y_train_bin.numpy(), epochs=setting["z_epochs"], batch_size=setting["z_batch_size"], \
+            model.fit(X_train, y_train_bin.numpy(), epochs=epochs, batch_size=setting["z_batch_size"], \
                 validation_data=(X_test, y_test_bin.numpy()), callbacks=[tensorboard_callback])
             y_test_bin = tf.reshape(tf.keras.backend.one_hot(y_test, num_classes), (-1, num_classes))
             out = model.predict(X_test)
