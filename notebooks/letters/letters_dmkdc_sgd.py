@@ -105,7 +105,8 @@ setting = {
     "z_type_of_rff": "rff",
     "z_fix_rff": False,
     "z_dataset": "letters",
-    "z_epochs": 2000
+    "z_epochs": 10,
+    "z_test_running_times": 10     
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
@@ -135,7 +136,7 @@ best_experiment = get_best_val_experiment(mlflow, experiment_id,  query, metric_
 from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
 best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, params_int, params_float, params_boolean)
 
-settings_test = generate_several_dict_with_random_state(best_experiment, 10)
+settings_test = generate_several_dict_with_random_state(best_experiment, setting["z_test_running_times"])
 
 experiment_dmkdc_sgd(np.concatenate([X_train, X_val]), \
     np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)

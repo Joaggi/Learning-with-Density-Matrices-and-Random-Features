@@ -102,8 +102,10 @@ setting = {
     "z_n_components": 1000,
     "z_tol": 1e-05, 
     "z_max_iter": 20000,
-    "z_step": "train_val"
-    "z_dataset": "letters;"
+    "z_step": "train_val",
+    "z_dataset": "letters",
+    "z_test_running_times": 10 
+
 }
 
 prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
@@ -132,7 +134,7 @@ best_experiment = get_best_val_experiment(mlflow, experiment_id,  query, metric_
 from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
 best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, params_int, params_float)
 
-settings_test = generate_several_dict_with_random_state(best_experiment, 10)
+settings_test = generate_several_dict_with_random_state(best_experiment, setting["z_test_running_times"])
 
 experiment_linear_svc(np.concatenate([X_train, X_val]), \
     np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)

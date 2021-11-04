@@ -52,8 +52,32 @@ from sklearn.model_selection import RandomizedSearchCV, KFold
 # from sklearn.model_selection import RandomizedSearchCV, KFold
 # from sklearn.metrics import make_scorer
 
-# + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 print(sys.path)
+
+setting = {
+    "z_run_name": "linear_svc",
+    "z_n_components": 1000,
+    "z_tol": 1e-05, 
+    "z_max_iter": 20000,
+    "z_step": "train_val",
+    "z_dataset": "letters",
+    "z_test_running_times": 10 
+
+}
+
+prod_settings = {"z_gamma" : [2], "z_C": [2]}
+
+params_int = ["z_n_components", "z_max_iter"]
+params_float = ["z_tol","z_gamma", "z_C"]
+
+
+algorithm = "linear_svc"
+
+from experiments import experiments
+experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, params_int, params_float, mlflow):
+
+
+# + jupyter={"outputs_hidden": false} pycharm={"name": "#%%\n"}
 
 
 
@@ -66,7 +90,6 @@ print("shape X_train : ", X_train.shape)
 print("shape y_train : ", y_train.shape)
 print("shape X_test : ", X_test.shape)
 print("shape y_test : ", y_test.shape)
-
 
 # + id="CCp5RUItvNfu"
 
@@ -93,7 +116,9 @@ setting = {
     "z_tol": 1e-05, 
     "z_max_iter": 20000,
     "z_step": "train_val",
-    "z_dataset": "letters"
+    "z_dataset": "letters",
+    "z_test_running_times": 10 
+
 }
 
 #prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
@@ -122,7 +147,7 @@ best_experiment = get_best_val_experiment(mlflow, experiment_id,  query, metric_
 from convert_best_train_experiment_to_settings_of_test import convert_best_train_experiment_to_settings_of_test
 best_experiment = convert_best_train_experiment_to_settings_of_test(best_experiment, params_int, params_float)
 
-settings_test = generate_several_dict_with_random_state(best_experiment, 10)
+settings_test = generate_several_dict_with_random_state(best_experiment, setting["z_test_running_times"])
 
 experiment_linear_svc(np.concatenate([X_train, X_val]), \
     np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
