@@ -6,7 +6,7 @@ from calculate_metrics import calculate_metrics
 def experiment_linear_svc(X_train, y_train, X_test, y_test, settings, mlflow):
     
     for i, setting in enumerate(settings):
-        print(f"experiment_dmkdc {i}")
+        print(f"experiment_dmkdc {i} {setting}")
 
         with mlflow.start_run(run_name=setting["z_run_name"]):
             X_train_features, X_test_features = \

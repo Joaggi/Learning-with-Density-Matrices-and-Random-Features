@@ -8,8 +8,11 @@ from get_best_test_experiment_metric import get_best_test_experiment_metric
 from make_experiment import make_experiment
 import numpy as np
 
-def experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, params_int, params_float, mlflow):
+def experiments(setting, prod_settings, params_int, params_float, mlflow):
 
+    algorithm = setting["z_run_name"]
+    dataset = setting["z_dataset"]
+    name_of_experiment = setting["z_name_of_experiment"]
 
     X_train, y_train, X_test, y_test = load_dataset(dataset)
 
