@@ -9,10 +9,10 @@ def load_gisette(path):
 
     num = 6000
     
-    train_data = pd.read_csv("{path}gisette_train.data", header=None, sep=" ").iloc[0:num,:5000]
-    train_labels = pd.read_csv("{path}gisette_train.labels", header=None, sep=" ").iloc[0:num]
-    test_data = pd.read_csv("{path}gisette_valid.data", header=None, sep=" ").iloc[0:num,:5000]
-    test_labels = pd.read_csv("{path}gisette_valid.labels", header=None, sep=" ").iloc[0:num]
+    train_data = pd.read_csv(f"{path}gisette_train.data", header=None, sep=" ").iloc[0:num,:5000]
+    train_labels = pd.read_csv(f"{path}gisette_train.labels", header=None, sep=" ").iloc[0:num]
+    test_data = pd.read_csv(f"{path}gisette_valid.data", header=None, sep=" ").iloc[0:num,:5000]
+    test_labels = pd.read_csv(f"{path}gisette_valid.labels", header=None, sep=" ").iloc[0:num]
 
 
     print(train_data.head())
