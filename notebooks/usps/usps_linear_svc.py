@@ -1,6 +1,6 @@
+try:
 current_path = ""
 
-try:
   import google.colab
   IN_COLAB = True
 except:

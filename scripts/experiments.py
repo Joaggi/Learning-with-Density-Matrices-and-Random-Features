@@ -49,7 +49,7 @@ def experiments(algorithm, name_of_experiment, dataset, setting, prod_settings, 
 
     settings_test = generate_several_dict_with_random_state(best_experiment, setting["z_test_running_times"])
 
-    make_experiment(np.concatenate([X_train, X_val]), \
+    make_experiment(algorithm, np.concatenate([X_train, X_val]), \
         np.concatenate([y_train, y_val]), X_test, y_test, settings_test, mlflow)
 
     query = f"params.z_run_name = '{setting['z_run_name']}' and params.z_step = 'test'"
