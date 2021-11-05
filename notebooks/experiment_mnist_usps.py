@@ -101,7 +101,7 @@ setting = {
 prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_eig_components": [0.0, 0.1, 0.5]}
 #prod_settings = {"z_gamma" : [2**-8], "z_eig_components": [0.1]}
 
-params_int = ["z_n_components", "z_batch_size", "z_epochs"]
+params_int = ["z_n_components", "z_batch_size", "z_train_epochs", "z_test_epochs"]
 params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]
 params_boolean = ["z_initialize_with_rff", "z_fix_rff"]
 
@@ -193,7 +193,7 @@ setting = {
 prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_eig_components": [0.0, 0.1, 0.5]}
 #prod_settings = {"z_gamma" : [2**-6], "z_eig_components": [0.1, 0]}
 
-params_int = ["z_n_components", "z_batch_size", "z_epochs"]
+params_int = ["z_n_components", "z_batch_size", "z_train_epochs", "z_test_epochs"]
 params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]
 params_boolean = ["z_initialize_with_rff", "z_fix_rff"]
 
