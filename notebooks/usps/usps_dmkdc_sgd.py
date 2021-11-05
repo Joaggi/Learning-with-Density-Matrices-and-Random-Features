@@ -56,14 +56,18 @@ setting = {
     "z_initialize_with_rff": True,
     "z_type_of_rff": "rff",
     "z_fix_rff": True, 
-    "z_train_epochs": 50, 
+    "z_train_epochs": 100, 
     "z_test_epochs": 5000, 
     "z_dataset": "usps",
-    "z_test_running_times": 10
+    "z_test_running_times": 10,
+    "z_random_search": True,
+    "z_random_search_iter": 30,
+    "z_random_search_random_state": 20
+
 }
 
-#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_eig_components": [0.0, 0.1, 0.5]}
-prod_settings = {"z_gamma" : [2**-6], "z_eig_components": [0.1, 0]}
+prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_eig_components": [0.0, 0.1, 0.5]}
+#prod_settings = {"z_gamma" : [2**-6], "z_eig_components": [0.1, 0]}
 
 params_int = ["z_n_components", "z_batch_size", "z_epochs"]
 params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]

@@ -46,6 +46,7 @@ from sklearn.model_selection import RandomizedSearchCV, KFold
 from experiments import experiments
 
 from mlflow_create_experiment import mlflow_create_experiment
+    "z_type_of_rff": "rff",
 
 setting = {
     "z_name_of_experiment": 'learning-with-density-matrices',
@@ -56,16 +57,19 @@ setting = {
     "z_learning_rate": 1e-06,
     "z_decay": 0.0,
     "z_initialize_with_rff": True,
-    "z_type_of_rff": "rff",
     "z_fix_rff": True, 
     "z_train_epochs": 50, 
-    "z_test_epochs": 500, 
+    "z_test_epochs": 2000, 
     "z_dataset": "letters",
-    "z_test_running_times": 2
+    "z_test_running_times": 10,
+    "z_random_search": True,
+    "z_random_search_iter": 30,
+    "z_random_search_random_state": 20
+
 }
 
-#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2**4], "z_eig_components": [0, 0.1, 0.5]}
+prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_eig_components": [0.0, 0.1, 0.5]}
+#prod_settings = {"z_gamma" : [2**4], "z_eig_components": [0, 0.1, 0.5]}
 
 params_int = ["z_n_components", "z_batch_size", "z_epochs"]
 params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]

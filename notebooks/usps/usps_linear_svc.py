@@ -55,11 +55,13 @@ setting = {
     "z_max_iter": 1000,
     "z_step": "train_val",
     "z_dataset": "usps",
-    "z_test_running_times": 10 
-
+    "z_test_running_times": 10,
+    "z_random_search": True,
+    "z_random_search_iter": 30,
+    "z_random_search_random_state": 20
 }
 
-prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_C": [2**i for i in range(-20,20)]}
+prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_C": [2**i for i in range(-20,10)]}
 #prod_settings = {"z_gamma" : [2], "z_C": [2]}
 
 params_int = ["z_n_components", "z_max_iter"]

@@ -55,11 +55,16 @@ setting = {
     "z_step": "train_val",
     "z_batch_size": 8,
     "z_dataset": "gisette",
-    "z_test_running_times": 10
+    "z_test_running_times": 10,
+    "z_random_search": True,
+    "z_random_search_iter": 30,
+    "z_random_search_random_state": 20
+
+
 }
 
-#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2**-7]}
+prod_settings = {"z_gamma" : [2**i for i in range(-20,20)]}
+#prod_settings = {"z_gamma" : [2**-7]}
 
 params_int = ["z_n_components", "z_batch_size"]
 params_float = ["z_gamma"]

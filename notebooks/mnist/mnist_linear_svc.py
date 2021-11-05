@@ -52,11 +52,15 @@ setting = {
     "z_max_iter": 20000,
     "z_step": "train_val",
     "z_dataset": "mnist",
-    "z_test_running_times": 10 
+    "z_test_running_times": 10 ,
+    "z_random_search": True,
+    "z_random_search_iter": 30,
+    "z_random_search_random_state": 20
+
 
 }
 
-prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,5)]}
+prod_settings = {"z_gamma" : [2**i for i in range(-20,10)], "z_C": [2**i for i in range(-20,5)]}
 #prod_settings = {"z_gamma" : [2], "z_C": [2]}
 
 params_int = ["z_n_components", "z_max_iter"]

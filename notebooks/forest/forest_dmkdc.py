@@ -45,6 +45,7 @@ from experiments import experiments
 
 from mlflow_create_experiment import mlflow_create_experiment
 
+    "z_random_search": True,
 
 
 setting = {
@@ -54,11 +55,15 @@ setting = {
     "z_step": "train_val",
     "z_batch_size": 8,
     "z_dataset": "forest",
-    "z_test_running_times": 10
+    "z_test_running_times": 10,
+    "z_random_search_iter": 30,
+    "z_random_search_random_state": 20
+
+
 }
 
-#prod_settings = {"z_gamma" : [2**i for i in range(-10,10)], "z_C": [2**i for i in range(-10,10)]}
-prod_settings = {"z_gamma" : [2**2]}
+prod_settings = {"z_gamma" : [2**i for i in range(-20,20)]}
+#prod_settings = {"z_gamma" : [2**2]}
 
 params_int = ["z_n_components", "z_batch_size"]
 params_float = ["z_gamma"]
