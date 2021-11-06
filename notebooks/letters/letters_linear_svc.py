@@ -25,12 +25,12 @@ else:
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
     # %cd ../../
-
+import os
 print(os.getcwd())
 
-sys.path.append('scripts/')
-
 from mlflow_create_experiment import mlflow_create_experiment
+
+
 import qmc.tf.layers as layers
 import qmc.tf.models as models
 

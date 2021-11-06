@@ -12,7 +12,10 @@ if IN_COLAB:
     os.system("pip3 install mlflow")
 
     from google.colab import drive
-    drive.mount('/content/drive') os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices') import sys sys.path.append('submodules/qmc/') #sys.path.append('../../../../submodules/qmc/')
+    drive.mount('/content/drive')
+    os.chdir('/content/drive/MyDrive/Academico/doctorado_programacion/experiments/2021_01_learning_with_density_matrices')
+    import sys 
+    sys.path.append('submodules/qmc/') #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
 else:
     import sys
@@ -44,11 +47,11 @@ from sklearn.model_selection import RandomizedSearchCV, KFold
 from experiments import experiments
 
 from mlflow_create_experiment import mlflow_create_experiment
-    "z_name_of_experiment": 'learning-with-density-matrices',
-    "z_n_components": 1000,
 
 setting = {
+    "z_name_of_experiment": 'learning-with-density-matrices',
     "z_run_name": "dmkdc_sgd",
+    "z_n_components": 1000,
     "z_step": "train_val",
     "z_batch_size": 8,
     "z_learning_rate": 1e-06,
@@ -56,19 +59,21 @@ setting = {
     "z_initialize_with_rff": True,
     "z_type_of_rff": "rff",
     "z_fix_rff": True, 
-    "z_train_epochs": 50, 
-    "z_test_epochs": 2000, 
+    "z_train_epochs": 20000, 
+    "z_test_epochs": 5000, 
     "z_dataset": "forest",
-    "z_test_running_times": 10,
-    "z_random_search": True,
+    "z_test_running_times": 0,
+    "z_random_search": False,
     "z_random_search_iter": 30,
-    "z_random_search_random_state": 20
-
-
+    "z_random_search_random_state": 20,
+    "z_train_val_enabled": False,
+    "z_select_best_val_experiment": False
 }
 
-prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_eig_components": [0.0, 0.1, 0.5]}
-#prod_settings = {"z_gamma" : [2**2], "z_eig_components": [0.1]}
+
+
+#prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_eig_components": [0.0, 0.1, 0.5]}
+prod_settings = {"z_gamma" : [2**-5], "z_eig_components": [0.1]}
 
 params_int = ["z_n_components", "z_batch_size", "z_train_epochs", "z_test_epochs"]
 params_float = ["z_gamma", "z_eig_components", "z_learning_rate", "z_decay"]

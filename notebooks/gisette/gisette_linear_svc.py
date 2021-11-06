@@ -1,4 +1,3 @@
-else:
 
 current_path = ""
 
@@ -19,6 +18,7 @@ if IN_COLAB:
     sys.path.append('submodules/qmc/')
     #sys.path.append('../../../../submodules/qmc/')
     print(sys.path)
+else:
     import sys
     sys.path.append('submodules/qmc/')
     sys.path.append('data/')
@@ -26,6 +26,7 @@ if IN_COLAB:
     print(sys.path)
     # %cd ../../
 
+print os
 print(os.getcwd())
 
 sys.path.append('scripts/')
@@ -58,7 +59,10 @@ setting = {
     "z_test_running_times": 10 ,
     "z_random_search": True,
     "z_random_search_iter": 30,
-    "z_random_search_random_state": 20
+    "z_random_search_random_state": 20,
+    "z_train_val_enabled": True,
+    "z_select_best_val_experiment": True,
+
 
 
 
