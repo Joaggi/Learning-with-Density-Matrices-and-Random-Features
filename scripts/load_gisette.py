@@ -4,6 +4,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.decomposition import PCA
 
+from min_max_scaler import min_max_scaler
+
 def load_gisette(path, random_state = 0):
 
 
@@ -31,6 +33,9 @@ def load_gisette(path, random_state = 0):
 
     y_train = y_train.astype('int32')
     y_test = y_test.astype('int32')
+
+
+    X_train, X_test = min_max_scaler(X_train, X_test)
 
     pca = PCA(n_components=400, random_state = random_state)
     X_train = pca.fit_transform(X_train)

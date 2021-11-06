@@ -54,11 +54,11 @@ setting = {
     "z_n_components": 1000,
     "z_step": "train_val",
     "z_batch_size": 8,
-    "z_learning_rate": 1e-06,
+    "z_learning_rate": 1e-03,
     "z_decay": 0.0,
     "z_initialize_with_rff": True,
     "z_type_of_rff": "rff",
-    "z_fix_rff": True, 
+    "z_fix_rff": False, 
     "z_train_epochs": 50, 
     "z_test_epochs": 5000, 
     "z_dataset": "gisette",
@@ -66,13 +66,13 @@ setting = {
     "z_random_search": False,
     "z_random_search_iter": 30,
     "z_random_search_random_state": 20,
-    "z_train_val_enabled": True,
-    "z_select_best_val_experiment": True
+    "z_train_val_enabled": False,
+    "z_select_best_val_experiment": False
 }
 
 
 
-prod_settings = {"z_gamma" : [2**i for i in range(-20,20)], "z_eig_components": [1, 0.1, 0.5]}
+prod_settings = {"z_gamma" : [2**-6], "z_eig_components": [0.3]}
 #prod_settings = {"z_gamma" : [2**-5], "z_eig_components": [1]}
 
 params_int = ["z_n_components", "z_batch_size", "z_train_epochs", "z_test_epochs"]
